@@ -74,8 +74,8 @@ export default function BaseToolbar({
           onClick={() => setShowFilters(!showFilters)}
           className={`flex items-center gap-2 px-4 h-10 rounded-full font-semibold text-sm shadow-sm border transition-all duration-300 ${
             showFilters
-              ? "bg-amber-100/90 text-amber-800 border-amber-200"
-              : "bg-white/80 text-stone-600 border-stone-200/60 hover:bg-white hover:text-stone-900 hover:shadow-md backdrop-blur-md"
+              ? "bg-emerald-100/90 text-emerald-800 border-emerald-200"
+              : "bg-white/80 text-slate-600 border-slate-200/60 hover:bg-white hover:text-slate-900 hover:shadow-md backdrop-blur-md"
           }`}
         >
           <Filter className="size-4" />
@@ -89,49 +89,49 @@ export default function BaseToolbar({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
               transition={{ duration: 0.15, ease: "easeOut" }}
-              className="absolute top-full right-0 mt-2 w-48 bg-white/95 backdrop-blur-xl shadow-xl border border-stone-200/60 rounded-2xl p-4 flex flex-col gap-3 z-50"
+              className="absolute top-full right-0 mt-2 w-48 bg-white/95 backdrop-blur-xl shadow-xl border border-slate-200/60 rounded-2xl p-4 flex flex-col gap-3 z-50"
             >
-              <div className="text-xs font-bold text-stone-400 uppercase tracking-wider mb-1">
+              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
                 HIỂN THỊ
               </div>
-              <label className="flex items-center gap-2 text-sm text-stone-600 cursor-pointer hover:text-stone-900 transition-colors select-none">
+              <label className="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-slate-900 transition-colors select-none">
                 <input
                   type="checkbox"
                   checked={!showAvatar}
                   onChange={(e) => setShowAvatar(!e.target.checked)}
-                  className="rounded text-amber-600 focus:ring-amber-500 cursor-pointer size-4"
+                  className="rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer size-4"
                 />
                 Tối giản
               </label>
 
-              <div className="h-px w-full bg-stone-100 my-1 font-bold text-stone-400 uppercase tracking-wider flex items-center gap-2"></div>
-              <div className="text-xs font-bold text-stone-400 uppercase tracking-wider mb-1">
+              <div className="h-px w-full bg-slate-100 my-1 font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2"></div>
+              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
                 LỌC DỮ LIỆU
               </div>
-              <label className="flex items-center gap-2 text-sm text-stone-600 cursor-pointer hover:text-stone-900 transition-colors select-none">
+              <label className="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-slate-900 transition-colors select-none">
                 <input
                   type="checkbox"
                   checked={hideSpouses}
                   onChange={(e) => setHideSpouses(e.target.checked)}
-                  className="rounded text-amber-600 focus:ring-amber-500 cursor-pointer size-4"
+                  className="rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer size-4"
                 />
                 Ẩn dâu/rể
               </label>
-              <label className="flex items-center gap-2 text-sm text-stone-600 cursor-pointer hover:text-stone-900 transition-colors select-none">
+              <label className="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-slate-900 transition-colors select-none">
                 <input
                   type="checkbox"
                   checked={hideMales}
                   onChange={(e) => setHideMales(e.target.checked)}
-                  className="rounded text-amber-600 focus:ring-amber-500 cursor-pointer size-4"
+                  className="rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer size-4"
                 />
                 Ẩn nam
               </label>
-              <label className="flex items-center gap-2 text-sm text-stone-600 cursor-pointer hover:text-stone-900 transition-colors select-none">
+              <label className="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-slate-900 transition-colors select-none">
                 <input
                   type="checkbox"
                   checked={hideFemales}
                   onChange={(e) => setHideFemales(e.target.checked)}
-                  className="rounded text-amber-600 focus:ring-amber-500 cursor-pointer size-4"
+                  className="rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer size-4"
                 />
                 Ẩn nữ
               </label>

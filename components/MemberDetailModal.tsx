@@ -148,7 +148,7 @@ export default function MemberDetailModal() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 bg-stone-900/40 backdrop-blur-sm"
+          className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 bg-slate-900/40 backdrop-blur-sm"
         >
           {/* Click-away backdrop (disabled while editing/creating to avoid accidental close) */}
           {!isEditing && !showCreateMember && (
@@ -164,7 +164,7 @@ export default function MemberDetailModal() {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 20 }}
             transition={{ type: "spring", stiffness: 350, damping: 25 }}
-            className="relative bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col border border-stone-200"
+            className="relative bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col border border-slate-200"
           >
             {/* Sticky Header Actions */}
             <div className="absolute top-4 right-4 sm:top-5 sm:right-5 z-20 flex items-center gap-2">
@@ -174,7 +174,7 @@ export default function MemberDetailModal() {
                   onClick={() => {
                     setIsEditing(false);
                   }}
-                  className="flex items-center gap-1.5 px-4 py-2 bg-stone-100/80 text-stone-700 rounded-full hover:bg-stone-200 font-semibold text-sm shadow-sm border border-stone-200/50 transition-colors"
+                  className="flex items-center gap-1.5 px-4 py-2 bg-slate-100/80 text-slate-700 rounded-full hover:bg-slate-200 font-semibold text-sm shadow-sm border border-slate-200/50 transition-colors"
                 >
                   <ArrowLeft className="size-4" />
                   <span className="hidden sm:inline">Quay lại</span>
@@ -185,14 +185,14 @@ export default function MemberDetailModal() {
                   <>
                     <Link
                       href={`/dashboard/members/${person.id}`}
-                      className="flex items-center gap-1.5 px-4 py-2 bg-amber-100/80 text-amber-800 rounded-full hover:bg-amber-200 font-semibold text-sm shadow-sm border border-amber-200/50 transition-colors"
+                      className="flex items-center gap-1.5 px-4 py-2 bg-emerald-100/80 text-emerald-800 rounded-full hover:bg-emerald-200 font-semibold text-sm shadow-sm border border-emerald-200/50 transition-colors"
                     >
                       <ExternalLink className="size-4" />
                       <span className="hidden sm:inline">Xem chi tiết</span>
                     </Link>
                     <button
                       onClick={() => setIsEditing(true)}
-                      className="flex items-center gap-1.5 px-4 py-2 bg-amber-100/80 text-amber-800 rounded-full hover:bg-amber-200 font-semibold text-sm shadow-sm border border-amber-200/50 transition-colors"
+                      className="flex items-center gap-1.5 px-4 py-2 bg-emerald-100/80 text-emerald-800 rounded-full hover:bg-emerald-200 font-semibold text-sm shadow-sm border border-emerald-200/50 transition-colors"
                     >
                       <Edit2 className="size-4" />
                       <span className="hidden sm:inline">Chỉnh sửa</span>
@@ -202,7 +202,7 @@ export default function MemberDetailModal() {
               )}
               <button
                 onClick={closeModal}
-                className="size-10 flex items-center justify-center bg-stone-100/80 text-stone-600 rounded-full hover:bg-stone-200 hover:text-stone-900 shadow-sm border border-stone-200/50 transition-colors"
+                className="size-10 flex items-center justify-center bg-slate-100/80 text-slate-600 rounded-full hover:bg-slate-200 hover:text-slate-900 shadow-sm border border-slate-200/50 transition-colors"
                 aria-label="Đóng"
               >
                 <X className="size-5" />
@@ -211,8 +211,8 @@ export default function MemberDetailModal() {
 
             {loading ? (
               <div className="flex-1 min-h-[400px] flex items-center justify-center flex-col gap-4">
-                <div className="size-10 border-4 border-amber-600 border-t-transparent rounded-full animate-spin"></div>
-                <p className="text-stone-500 font-medium">Đang tải...</p>
+                <div className="size-10 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
+                <p className="text-slate-500 font-medium">Đang tải...</p>
               </div>
             ) : error ? (
               <div className="flex-1 min-h-[400px] flex items-center justify-center flex-col gap-4 p-8 text-center">
@@ -222,7 +222,7 @@ export default function MemberDetailModal() {
                 <p className="text-red-600 font-medium text-lg">{error}</p>
                 <button
                   onClick={closeModal}
-                  className="mt-2 px-6 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold rounded-full transition-colors"
+                  className="mt-2 px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-full transition-colors"
                 >
                   Đóng
                 </button>
@@ -230,7 +230,7 @@ export default function MemberDetailModal() {
             ) : isEditing && formInitialData ? (
               /* ── EDIT MODE ── */
               <div className="flex-1 overflow-y-auto custom-scrollbar px-4 sm:px-8 pt-16 pb-8">
-                <h2 className="text-xl font-serif font-bold text-stone-800 mb-6">
+                <h2 className="text-xl font-serif font-bold text-slate-800 mb-6">
                   Chỉnh sửa thành viên
                 </h2>
                 <MemberForm
@@ -248,7 +248,7 @@ export default function MemberDetailModal() {
             ) : showCreateMember ? (
               /* ── CREATE MODE ── */
               <div className="flex-1 overflow-y-auto custom-scrollbar px-4 sm:px-8 pt-16 pb-8">
-                <h2 className="text-xl font-serif font-bold text-stone-800 mb-6">
+                <h2 className="text-xl font-serif font-bold text-slate-800 mb-6">
                   Thêm thành viên mới
                 </h2>
                 <MemberForm

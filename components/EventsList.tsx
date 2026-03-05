@@ -82,19 +82,19 @@ function EventCard({
       onClick={handleClick}
       className={`w-full text-left flex items-start gap-4 p-4 rounded-2xl border transition-all cursor-pointer hover:shadow-md group ${
         isToday
-          ? "bg-amber-50 border-amber-300 shadow-sm"
+          ? "bg-emerald-50 border-emerald-300 shadow-sm"
           : isBirthday
-            ? "bg-white/80 border-stone-200/60 hover:border-blue-200"
+            ? "bg-white/80 border-slate-200/60 hover:border-blue-200"
             : isCustom
-              ? "bg-white/80 border-stone-200/60 hover:border-purple-200"
-              : "bg-white/80 border-stone-200/60 hover:border-rose-200"
+              ? "bg-white/80 border-slate-200/60 hover:border-purple-200"
+              : "bg-white/80 border-slate-200/60 hover:border-rose-200"
       }`}
     >
       {/* Icon */}
       <div
         className={`shrink-0 size-11 flex items-center justify-center rounded-xl mt-0.5 ${
           isToday
-            ? "bg-amber-100 text-amber-600"
+            ? "bg-emerald-100 text-emerald-600"
             : isBirthday
               ? "bg-blue-50 text-blue-500"
               : isCustom
@@ -115,7 +115,7 @@ function EventCard({
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <p
-            className={`font-semibold text-stone-800 truncate transition-colors group-hover:text-amber-700`}
+            className={`font-semibold text-slate-800 truncate transition-colors group-hover:text-emerald-700`}
           >
             {event.personName}
           </p>
@@ -129,28 +129,28 @@ function EventCard({
             )}
         </div>
         <div className="flex flex-col gap-1 mt-1">
-          <p className="text-sm text-stone-500 flex items-center gap-1.5 leading-tight">
+          <p className="text-sm text-slate-500 flex items-center gap-1.5 leading-tight">
             <CalendarDays className="size-3.5 shrink-0" />
             {isBirthday
               ? "Sinh nhật"
               : isCustom
                 ? "Sự kiện"
                 : "Ngày giỗ"} —{" "}
-            <span className="font-medium text-stone-600">
+            <span className="font-medium text-slate-600">
               {event.eventDateLabel}
             </span>
             {event.originYear && (
-              <span className="text-stone-400">({event.originYear})</span>
+              <span className="text-slate-400">({event.originYear})</span>
             )}
           </p>
           {event.location && (
-            <p className="text-sm text-stone-500 flex items-center gap-1.5 leading-tight">
+            <p className="text-sm text-slate-500 flex items-center gap-1.5 leading-tight">
               <MapPin className="size-3.5 shrink-0" />
               <span className="truncate">{event.location}</span>
             </p>
           )}
           {event.content && (
-            <p className="text-sm text-stone-500 flex items-start gap-1.5 leading-tight mt-0.5">
+            <p className="text-sm text-slate-500 flex items-start gap-1.5 leading-tight mt-0.5">
               <AlignLeft className="size-3.5 shrink-0 mt-0.5" />
               <span className="line-clamp-2">{event.content}</span>
             </p>
@@ -162,10 +162,10 @@ function EventCard({
       <div
         className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold ${
           isToday
-            ? "bg-amber-400 text-white"
+            ? "bg-emerald-400 text-white"
             : isSoon
               ? "bg-red-100 text-red-600"
-              : "bg-stone-100 text-stone-500"
+              : "bg-slate-100 text-slate-500"
         }`}
       >
         <Clock className="size-3" />
@@ -261,38 +261,38 @@ export default function EventsList({
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-3xl bg-white border border-stone-200/60 shadow-sm hover:shadow-stone-100 hover:border-stone-400 transition-all duration-300 mb-8 p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6"
+        className="relative overflow-hidden rounded-3xl bg-white border border-slate-200/60 shadow-sm hover:shadow-slate-100 hover:border-slate-400 transition-all duration-300 mb-8 p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6"
       >
         {/* Subtle background flair */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-amber-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none opacity-50"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none opacity-50"></div>
 
         <div className="relative flex items-center gap-4 sm:gap-6">
-          <div className="size-16 rounded-2xl bg-stone-50 flex items-center justify-center shrink-0 border border-stone-100 shadow-sm text-stone-600">
+          <div className="size-16 rounded-2xl bg-slate-50 flex items-center justify-center shrink-0 border border-slate-100 shadow-sm text-slate-600">
             <CalendarDays className="size-8" />
           </div>
           <div>
-            <p className="text-xl sm:text-2xl font-bold text-stone-800 tracking-tight">
+            <p className="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight">
               {todayDate.solar}
             </p>
             {todayDate.lunar && (
-              <div className="mt-2.5 inline-flex flex-wrap items-center gap-2 px-3.5 py-1 rounded-full bg-stone-50 border border-stone-100">
-                <span className="text-xs font-medium text-stone-500 uppercase tracking-wider">
+              <div className="mt-2.5 inline-flex flex-wrap items-center gap-2 px-3.5 py-1 rounded-full bg-slate-50 border border-slate-100">
+                <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">
                   Âm lịch:
                 </span>
-                <span className="text-sm font-semibold text-stone-700">
+                <span className="text-sm font-semibold text-slate-700">
                   {todayDate.lunar}
                 </span>
               </div>
             )}
             {(todayCount > 0 || soonCount > 0) && (
-              <p className="text-sm text-stone-500 mt-3 flex items-start sm:items-center gap-2.5 font-medium">
+              <p className="text-sm text-slate-500 mt-3 flex items-start sm:items-center gap-2.5 font-medium">
                 <span className="relative flex size-2.5 shrink-0 mt-1 sm:mt-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full size-2.5 bg-amber-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full size-2.5 bg-emerald-500"></span>
                 </span>
                 <span className="flex flex-wrap items-center gap-1.5">
                   {todayCount > 0 && (
-                    <span className="font-semibold text-stone-700">
+                    <span className="font-semibold text-slate-700">
                       {todayCount} sự kiện hôm nay
                     </span>
                   )}
@@ -310,9 +310,9 @@ export default function EventsList({
 
         <button
           onClick={handleOpenCreateModal}
-          className="relative z-10 w-full sm:w-auto px-5 py-3 rounded-xl bg-stone-800 text-white font-semibold hover:bg-stone-900 active:scale-95 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+          className="relative z-10 w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-800 text-white font-semibold hover:bg-slate-900 active:scale-95 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
         >
-          <Plus className="size-5 text-stone-300" />
+          <Plus className="size-5 text-slate-300" />
           <span>Thêm sự kiện</span>
         </button>
       </motion.div>
@@ -334,26 +334,26 @@ export default function EventsList({
               onClick={() => setFilter(tab.key)}
               className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
                 filter === tab.key
-                  ? "bg-amber-500 text-white shadow-sm"
-                  : "bg-white/80 text-stone-600 border border-stone-200/60 hover:border-amber-200 hover:text-amber-700"
+                  ? "bg-emerald-500 text-white shadow-sm"
+                  : "bg-white/80 text-slate-600 border border-slate-200/60 hover:border-emerald-200 hover:text-emerald-700"
               }`}
             >
               {tab.label}
             </button>
           ))}
-          <span className="ml-auto text-xs text-stone-400 self-center">
+          <span className="ml-auto text-xs text-slate-400 self-center">
             {filtered.length} sự kiện trong năm
           </span>
         </div>
 
         {/* Toggle options */}
         <div className="flex px-1">
-          <label className="flex items-center gap-2.5 text-sm font-medium text-stone-600 cursor-pointer hover:text-stone-900 transition-colors select-none">
+          <label className="flex items-center gap-2.5 text-sm font-medium text-slate-600 cursor-pointer hover:text-slate-900 transition-colors select-none">
             <input
               type="checkbox"
               checked={showDeceasedBirthdays}
               onChange={(e) => setShowDeceasedBirthdays(e.target.checked)}
-              className="rounded-md border-stone-300 text-amber-500 focus:ring-amber-500 size-4 transition-all"
+              className="rounded-md border-slate-300 text-emerald-500 focus:ring-emerald-500 size-4 transition-all"
             />
             Hiển thị sinh nhật của người đã mất
           </label>
@@ -362,7 +362,7 @@ export default function EventsList({
 
       {/* Event list */}
       {visible.length === 0 ? (
-        <div className="text-center py-16 text-stone-400">
+        <div className="text-center py-16 text-slate-400">
           <CalendarDays className="size-10 mx-auto mb-3 opacity-40" />
           <p className="font-medium">Không có sự kiện nào</p>
           <p className="text-sm mt-1">
@@ -386,7 +386,7 @@ export default function EventsList({
       {upcoming.length > showCount && (
         <button
           onClick={() => setShowCount((n) => n + 20)}
-          className="w-full py-3 text-sm font-semibold text-stone-500 hover:text-amber-600 transition-colors"
+          className="w-full py-3 text-sm font-semibold text-slate-500 hover:text-emerald-600 transition-colors"
         >
           Xem thêm {upcoming.length - showCount} sự kiện…
         </button>

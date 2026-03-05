@@ -5,14 +5,14 @@ import Link from "next/link";
 
 export default function DashboardHeader() {
   return (
-    <header className="sticky top-0 z-30 bg-white/80 border-b border-stone-200 shadow-sm transition-all duration-200">
+    <header className="sticky top-0 z-30 bg-white/80 border-b border-slate-200 shadow-sm transition-all duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Link
             href="/dashboard"
             className="group flex items-center gap-2 sm:gap-3"
           >
-            <div className="relative size-8 rounded-lg overflow-hidden shrink-0 border border-stone-200/50 transition-all">
+            <div className="relative size-8 rounded-lg overflow-hidden shrink-0 border border-slate-200/50 transition-all">
               <Image
                 src="/icon.png"
                 alt="Logo"
@@ -21,7 +21,7 @@ export default function DashboardHeader() {
                 sizes="32px"
               />
             </div>
-            <h1 className="text-xl sm:text-2xl font-serif font-bold text-stone-800 group-hover:text-amber-700 transition-colors">
+            <h1 className="text-xl sm:text-2xl font-serif font-bold text-slate-800 group-hover:text-emerald-700 transition-colors">
               {config.siteName}
             </h1>
           </Link>

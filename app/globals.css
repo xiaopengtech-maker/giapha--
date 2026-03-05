@@ -1,54 +1,73 @@
 @import "tailwindcss";
 
 :root {
-  /* Premium Gold Theme - Luxurious & Elegant */
-  --primary-50: #fffbeb;
-  --primary-100: #fef3c7;
-  --primary-200: #fde68a;
-  --primary-300: #fcd34d;
-  --primary-400: #fbbf24;
-  --primary-500: #f59e0b;
-  --primary-600: #d97706;
-  --primary-700: #b45309;
-  --primary-800: #92400e;
-  --primary-900: #78350f;
-
-  /* Background & Foreground */
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Premium Color Palette - Emerald & Gold Luxury */
+  --color-primary: #059669;
+  --color-primary-light: #10b981;
+  --color-primary-dark: #047857;
+  --color-secondary: #1c1917;
+  --color-accent: #fbbf24;
   
-  /* Accent Colors - Luxurious Gold */
-  --accent-gold: #d97706;
-  --accent-blue: #2563eb;
-  --accent-green: #16a34a;
-  --accent-red: #dc2626;
+  /* Background Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --bg-card: #ffffff;
   
-  /* Stone Colors */
-  --stone-50: #fafaf9;
-  --stone-100: #f5f5f4;
-  --stone-200: #e7e5e4;
-  --stone-300: #d6d3d1;
-  --stone-400: #a8a29e;
-  --stone-500: #78716c;
-  --stone-600: #57534e;
-  --stone-700: #44403c;
-  --stone-800: #292524;
-  --stone-900: #1c1917;
+  /* Text Colors */
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --text-inverse: #ffffff;
+  
+  /* Border Colors */
+  --border-light: #e2e8f0;
+  --border-medium: #cbd5e1;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-glow: 0 0 40px -10px rgba(5, 150, 105, 0.3);
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --gradient-dark: linear-gradient(135deg, #1c1917 0%, #44403c 100%);
+  --gradient-gold: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fcd34d 100%);
+  --gradient-emerald: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 50%, #6ee7b7 100%);
+  
+  /* Spacing */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-full: 9999px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
   --font-sans: var(--font-inter);
   --font-serif: var(--font-playfair);
 }
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
 /* Fix iOS auto-zoom when focusing on inputs */
@@ -68,99 +87,169 @@ select {
 
 /* Button Styles */
 .btn {
-  @apply inline-flex items-center px-5 py-2.5 border border-stone-200/80 text-sm font-medium rounded-full shadow-sm hover:shadow-md text-stone-600 bg-white hover:bg-stone-50 transition-all duration-300 hover:-translate-y-0.5 justify-center shrink-0 gap-1.5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  color: #374151;
 }
 
 .btn:hover {
-  @apply shadow-lg border-stone-300;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  transform: translateY(-2px);
+}
+
+.btn:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #10b981;
+  ring-offset: 2px;
 }
 
 .btn-primary {
-  @apply inline-flex items-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-full shadow-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 transition-all duration-300 hover:-translate-y-0.5 justify-center shrink-0 gap-1.5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  background: linear-gradient(to right, #10b981, #059669);
+  color: white;
+  box-shadow: 0 4px 14px 0 rgba(5, 150, 105, 0.39);
 }
 
 .btn-primary:hover {
-  @apply shadow-xl from-amber-600 to-amber-700;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  transform: translateY(-4px);
 }
 
 .btn-secondary {
-  @apply inline-flex items-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-full shadow-sm text-white bg-gradient-to-r from-stone-600 to-stone-700 hover:from-stone-700 hover:to-stone-800 transition-all duration-300 hover:-translate-y-0.5 justify-center shrink-0 gap-1.5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  background-color: #111827;
+  color: white;
 }
 
 .btn-secondary:hover {
-  @apply shadow-xl from-stone-700 to-stone-800;
-}
-
-/* Title Styles */
-.title {
-  @apply text-2xl sm:text-3xl font-serif font-bold text-stone-800;
-}
-
-.title-lg {
-  @apply text-3xl sm:text-4xl font-serif font-bold text-stone-900;
-}
-
-.title-sm {
-  @apply text-xl sm:text-2xl font-serif font-semibold text-stone-800;
-}
-
-/* Card Styles */
-.card {
-  @apply bg-white rounded-2xl shadow-sm border border-stone-100 p-6 transition-all duration-300;
-}
-
-.card-hover {
-  @apply hover:shadow-lg hover:border-stone-200 hover:-translate-y-0.5;
+  background-color: #1f2937;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  transform: translateY(-2px);
 }
 
 /* Input Styles */
 .input {
-  @apply w-full px-4 py-3 rounded-xl border border-stone-200 bg-white text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-all duration-200;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  background-color: white;
+  color: #111827;
+  transition: all 0.2s ease;
+}
+
+.input::placeholder {
+  color: #9ca3af;
 }
 
 .input:focus {
-  @apply shadow-lg border-amber-400;
+  outline: none;
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Card Styles */
+.card {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+}
+
+.card-hover:hover {
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  transform: translateY(-4px);
+}
+
+/* Title Styles */
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #111827;
+  font-family: 'Playfair Display', serif;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 2.25rem;
+  }
+}
+
+.title-lg {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #111827;
+  font-family: 'Playfair Display', serif;
+}
+
+@media (min-width: 768px) {
+  .title-lg {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title-lg {
+    font-size: 3.75rem;
+  }
+}
+
+.title-sm {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
 }
 
 /* Badge Styles */
 .badge {
-  @apply inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
 }
 
-.badge-amber {
-  @apply bg-amber-100 text-amber-800;
+.badge-primary {
+  background-color: #d1fae5;
+  color: #065f46;
 }
 
-.badge-stone {
-  @apply bg-stone-100 text-stone-700;
-}
-
-.badge-green {
-  @apply bg-green-100 text-green-800;
-}
-
-.badge-red {
-  @apply bg-red-100 text-red-800;
-}
-
-.badge-blue {
-  @apply bg-blue-100 text-blue-800;
-}
-
-/* Link Styles */
-.link {
-  @apply text-amber-600 hover:text-amber-700 underline-offset-4 hover:underline transition-colors duration-200;
-}
-
-.link-blue {
-  @apply text-blue-600 hover:text-blue-700 underline-offset-4 hover:underline transition-colors duration-200;
+.badge-secondary {
+  background-color: #f3f4f6;
+  color: #374151;
 }
 
 /* Animation Classes */
-@keyframes fadeIn {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -168,10 +257,19 @@ select {
   }
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes slideInLeft {
   from {
     opacity: 0;
-    transform: translateX(-20px);
+    transform: translateX(-30px);
   }
   to {
     opacity: 1;
@@ -182,7 +280,7 @@ select {
 @keyframes slideInRight {
   from {
     opacity: 0;
-    transform: translateX(20px);
+    transform: translateX(30px);
   }
   to {
     opacity: 1;
@@ -229,28 +327,29 @@ select {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f5f5f4;
+  background: #f1f5f9;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d6d3d1;
+  background: #cbd5e1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8a29e;
+  background: #94a3b8;
 }
 
 /* Selection Styles */
 ::selection {
-  background-color: #fde68a;
-  color: #78350f;
+  background-color: #d1fae5;
+  color: #065f46;
 }
 
 /* Focus Styles */
 *:focus-visible {
-  @apply outline-none ring-2 ring-amber-400 ring-offset-2;
+  outline: none;
+  box-shadow: 0 0 0 2px #6ee7b7;
 }
 
 /* Print Styles */

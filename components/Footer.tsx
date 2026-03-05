@@ -9,11 +9,11 @@ export default function Footer({
 }: FooterProps) {
   return (
     <footer
-      className={`py-8 text-center text-sm text-stone-500 ${className}`}
+      className={`py-8 text-center text-sm text-slate-500 ${className}`}
     >
       <div className="max-w-7xl mx-auto px-4">
         {showDisclaimer && (
-          <p className="mb-4 text-xs tracking-wide bg-amber-50 inline-block px-3 py-1 rounded-full text-amber-800 border border-amber-200/50">
+          <p className="mb-4 text-xs tracking-wide bg-emerald-50 inline-block px-3 py-1 rounded-full text-emerald-800 border border-emerald-200/50">
             Nội dung có thể thiếu sót. Vui lòng đóng góp để gia phả chính xác hơn.
           </p>
         )}
@@ -22,7 +22,7 @@ export default function Footer({
             href="https://facebook.com/ducphu.private"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold text-stone-600 hover:text-amber-700 transition-colors inline-flex items-center gap-1.5"
+            className="font-semibold text-slate-600 hover:text-emerald-700 transition-colors inline-flex items-center gap-1.5"
           >
             <svg
               viewBox="0 0 24 24"
