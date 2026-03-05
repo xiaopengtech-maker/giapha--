@@ -9,26 +9,25 @@ export default function Footer({
 }: FooterProps) {
   return (
     <footer
-      className={`py-8 text-center text-sm text-stone-500 ${className} backdrop-blur-sm`}
+      className={`py-8 text-center text-base text-stone-600 ${className} backdrop-blur-sm`}
     >
       <div className="max-w-7xl mx-auto px-4">
         {showDisclaimer && (
-          <p className="mb-4 text-xs tracking-wide bg-amber-50 inline-block px-3 py-1 rounded-full text-amber-800/80 border border-amber-200/50">
-            Nội dung có thể thiếu sót. Vui lòng đóng góp để gia phả chính xác
-            hơn.
+          <p className="mb-4 text-base bg-amber-50 inline-block px-4 py-2 rounded-2xl text-amber-800 border-2 border-amber-200 font-medium">
+            ⚠️ Nội dung có thể thiếu sót. Vui lòng đóng góp để gia phả chính xác hơn.
           </p>
         )}
-        <p className="flex items-center justify-center gap-2 opacity-80 hover:opacity-100 transition-opacity">
+        <p className="flex items-center justify-center gap-3 text-lg font-medium">
           <a
-            href="https://github.com/homielab/giapha-os"
+            href=""
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold text-stone-600 hover:text-amber-700 transition-colors inline-flex items-center gap-1.5"
+            className="font-bold text-stone-700 hover:text-amber-700 transition-colors inline-flex items-center gap-2"
           >
             <svg
               viewBox="0 0 24 24"
-              width="16"
-              height="16"
+              width="20"
+              height="20"
               stroke="currentColor"
               strokeWidth="2"
               fill="none"
@@ -39,12 +38,12 @@ export default function Footer({
             </svg>
             Developer
           </a>
-          by
+          <span className="text-stone-400">by</span>
           <a
             href="https://facebook.com/ducphu.private"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold text-blue-600 hover:text-blue-700 transition-colors inline-flex items-center gap-1.5"
+            className="font-bold text-blue-600 hover:text-blue-700 transition-colors inline-flex items-center gap-2"
           >
             Nguyen Duc Phu
           </a>
