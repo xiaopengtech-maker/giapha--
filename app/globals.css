@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  /* Primary Colors - Warm Amber Theme */
+  /* Premium Gold Theme - Luxurious & Elegant */
   --primary-50: #fffbeb;
   --primary-100: #fef3c7;
   --primary-200: #fde68a;
@@ -14,14 +14,26 @@
   --primary-900: #78350f;
 
   /* Background & Foreground */
-  --background: #fefefe;
-  --foreground: #1c1917;
+  --background: #ffffff;
+  --foreground: #171717;
   
-  /* Accent Colors */
-  --accent-amber: #f59e0b;
+  /* Accent Colors - Luxurious Gold */
+  --accent-gold: #d97706;
   --accent-blue: #2563eb;
   --accent-green: #16a34a;
   --accent-red: #dc2626;
+  
+  /* Stone Colors */
+  --stone-50: #fafaf9;
+  --stone-100: #f5f5f4;
+  --stone-200: #e7e5e4;
+  --stone-300: #d6d3d1;
+  --stone-400: #a8a29e;
+  --stone-500: #78716c;
+  --stone-600: #57534e;
+  --stone-700: #44403c;
+  --stone-800: #292524;
+  --stone-900: #1c1917;
 }
 
 @theme inline {
@@ -39,22 +51,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ================================
-   ACCESSIBILITY-FOCUSED STYLES
-   Designed for elderly and children
-   ================================ */
-
-/* Larger base font size for readability */
-html {
-  font-size: 18px;
-}
-
 /* Fix iOS auto-zoom when focusing on inputs */
 @media screen and (max-width: 768px) {
   input,
   textarea,
   select {
-    font-size: 18px !important;
+    font-size: 16px !important;
   }
 }
 
@@ -64,63 +66,65 @@ select {
   cursor: pointer;
 }
 
-/* ================================
-   BUTTON STYLES - Large touch targets
-   ================================ */
+/* Button Styles */
 .btn {
-  @apply inline-flex items-center px-6 py-3 text-base font-semibold rounded-2xl border-2 border-stone-300 bg-white text-stone-700 hover:bg-stone-50 hover:border-stone-400 transition-all duration-200 justify-center gap-2 min-h-[56px];
+  @apply inline-flex items-center px-5 py-2.5 border border-stone-200/80 text-sm font-medium rounded-full shadow-sm hover:shadow-md text-stone-600 bg-white hover:bg-stone-50 transition-all duration-300 hover:-translate-y-0.5 justify-center shrink-0 gap-1.5;
+}
+
+.btn:hover {
+  @apply shadow-lg border-stone-300;
 }
 
 .btn-primary {
-  @apply inline-flex items-center px-8 py-4 text-base font-bold rounded-2xl border-2 border-amber-500 bg-amber-500 text-white hover:bg-amber-600 hover:border-amber-600 transition-all duration-200 justify-center gap-2 min-h-[56px];
+  @apply inline-flex items-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-full shadow-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 transition-all duration-300 hover:-translate-y-0.5 justify-center shrink-0 gap-1.5;
+}
+
+.btn-primary:hover {
+  @apply shadow-xl from-amber-600 to-amber-700;
 }
 
 .btn-secondary {
-  @apply inline-flex items-center px-8 py-4 text-base font-bold rounded-2xl border-2 border-stone-600 bg-stone-700 text-white hover:bg-stone-800 hover:border-stone-800 transition-all duration-200 justify-center gap-2 min-h-[56px];
+  @apply inline-flex items-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-full shadow-sm text-white bg-gradient-to-r from-stone-600 to-stone-700 hover:from-stone-700 hover:to-stone-800 transition-all duration-300 hover:-translate-y-0.5 justify-center shrink-0 gap-1.5;
 }
 
-.btn-danger {
-  @apply inline-flex items-center px-8 py-4 text-base font-bold rounded-2xl border-2 border-red-500 bg-red-500 text-white hover:bg-red-600 hover:border-red-600 transition-all duration-200 justify-center gap-2 min-h-[56px];
+.btn-secondary:hover {
+  @apply shadow-xl from-stone-700 to-stone-800;
 }
 
-/* ================================
-   TITLE STYLES - Clear hierarchy
-   ================================ */
+/* Title Styles */
 .title {
-  @apply text-3xl sm:text-4xl font-bold text-stone-900;
+  @apply text-2xl sm:text-3xl font-serif font-bold text-stone-800;
 }
 
 .title-lg {
-  @apply text-4xl sm:text-5xl font-bold text-stone-900;
+  @apply text-3xl sm:text-4xl font-serif font-bold text-stone-900;
 }
 
 .title-sm {
-  @apply text-2xl sm:text-3xl font-semibold text-stone-900;
+  @apply text-xl sm:text-2xl font-serif font-semibold text-stone-800;
 }
 
-/* ================================
-   CARD STYLES - Simple and clear
-   ================================ */
+/* Card Styles */
 .card {
-  @apply bg-white rounded-3xl border-2 border-stone-200 p-6 transition-all duration-200;
+  @apply bg-white rounded-2xl shadow-sm border border-stone-100 p-6 transition-all duration-300;
 }
 
 .card-hover {
-  @apply hover:border-amber-300 hover:shadow-lg;
+  @apply hover:shadow-lg hover:border-stone-200 hover:-translate-y-0.5;
 }
 
-/* ================================
-   INPUT STYLES - Large and clear
-   ================================ */
+/* Input Styles */
 .input {
-  @apply w-full px-5 py-4 rounded-2xl border-2 border-stone-300 bg-white text-stone-900 placeholder-stone-400 text-lg focus:outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100 transition-all duration-200 min-h-[56px];
+  @apply w-full px-4 py-3 rounded-xl border border-stone-200 bg-white text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-all duration-200;
 }
 
-/* ================================
-   BADGE STYLES - Clear and visible
-   ================================ */
+.input:focus {
+  @apply shadow-lg border-amber-400;
+}
+
+/* Badge Styles */
 .badge {
-  @apply inline-flex items-center px-4 py-2 text-base font-medium rounded-full;
+  @apply inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full;
 }
 
 .badge-amber {
@@ -143,89 +147,113 @@ select {
   @apply bg-blue-100 text-blue-800;
 }
 
-/* ================================
-   LINK STYLES - Clear navigation
-   ================================ */
+/* Link Styles */
 .link {
-  @apply text-amber-600 hover:text-amber-700 underline-offset-4 hover:underline font-semibold text-lg;
+  @apply text-amber-600 hover:text-amber-700 underline-offset-4 hover:underline transition-colors duration-200;
 }
 
 .link-blue {
-  @apply text-blue-600 hover:text-blue-700 underline-offset-4 hover:underline font-semibold text-lg;
+  @apply text-blue-600 hover:text-blue-700 underline-offset-4 hover:underline transition-colors duration-200;
 }
 
-/* ================================
-   NAVIGATION STYLES - Simple & Clear
-   ================================ */
-.nav-link {
-  @apply flex items-center gap-3 px-5 py-3 text-lg font-semibold text-stone-700 hover:text-stone-900 hover:bg-stone-100 rounded-xl transition-all duration-200 min-h-[52px];
-}
-
-.nav-link-active {
-  @apply bg-amber-100 text-amber-800 border-l-4 border-amber-500;
-}
-
-/* ================================
-   SIMPLE ANIMATIONS - Not distracting
-   ================================ */
+/* Animation Classes */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
 }
 
-.animate-slide-up {
-  animation: slideUp 0.5s ease-out forwards;
+.animate-slide-in-left {
+  animation: slideInLeft 0.5s ease-out forwards;
 }
 
-/* ================================
-   CUSTOM SCROLLBAR - Easy to see
-   ================================ */
+.animate-slide-in-right {
+  animation: slideInRight 0.5s ease-out forwards;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* Staggered animation delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
   background: #f5f5f4;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #a8a29e;
-  border-radius: 6px;
+  background: #d6d3d1;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #78716c;
+  background: #a8a29e;
 }
 
-/* ================================
-   SELECTION STYLES - High contrast
-   ================================ */
+/* Selection Styles */
 ::selection {
   background-color: #fde68a;
   color: #78350f;
 }
 
-/* ================================
-   FOCUS STYLES - Very visible
-   ================================ */
+/* Focus Styles */
 *:focus-visible {
-  @apply outline-none ring-4 ring-amber-300 ring-offset-2;
+  @apply outline-none ring-2 ring-amber-400 ring-offset-2;
 }
 
-/* ================================
-   PRINT STYLES
-   ================================ */
+/* Print Styles */
 @media print {
   body {
     background: white;
@@ -237,9 +265,7 @@ select {
   }
 }
 
-/* ================================
-   REDUCED MOTION
-   ================================ */
+/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -248,84 +274,4 @@ select {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-/* ================================
-   TABLE STYLES - Easy to read
-   ================================ */
-.table-container {
-  @apply overflow-x-auto rounded-2xl border-2 border-stone-200;
-}
-
-.table {
-  @apply w-full text-left;
-}
-
-.table th {
-  @apply px-6 py-4 bg-stone-100 text-stone-800 font-bold text-lg border-b-2 border-stone-200;
-}
-
-.table td {
-  @apply px-6 py-4 text-stone-700 text-base border-b border-stone-100;
-}
-
-.table tr:hover td {
-  @apply bg-amber-50;
-}
-
-/* ================================
-   AVATAR STYLES - Clear and visible
-   ================================ */
-.avatar {
-  @apply rounded-full border-2 border-stone-300;
-}
-
-.avatar-lg {
-  @apply w-24 h-24;
-}
-
-.avatar-md {
-  @apply w-16 h-16;
-}
-
-.avatar-sm {
-  @apply w-12 h-12;
-}
-
-/* ================================
-   MODAL STYLES - Simple and clear
-   ================================ */
-.modal-overlay {
-  @apply fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50;
-}
-
-.modal-content {
-  @apply bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl border-2 border-stone-200;
-}
-
-.modal-title {
-  @apply text-2xl font-bold text-stone-900 mb-4;
-}
-
-/* ================================
-   ALERT STYLES - Clear messages
-   ================================ */
-.alert {
-  @apply p-4 rounded-2xl border-2 text-lg font-medium;
-}
-
-.alert-success {
-  @apply bg-green-100 text-green-800 border-green-300;
-}
-
-.alert-error {
-  @apply bg-red-100 text-red-800 border-red-300;
-}
-
-.alert-warning {
-  @apply bg-amber-100 text-amber-800 border-amber-300;
-}
-
-.alert-info {
-  @apply bg-blue-100 text-blue-800 border-blue-300;
 }
