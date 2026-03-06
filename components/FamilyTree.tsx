@@ -123,22 +123,17 @@ export default function FamilyTree ({
     setMaxLevel(buildTree.maxLevel);
   }, [buildTree]);
 
-  // Render a family unit with rectangular box
+  // Render a family unit with rectangular box - compact version
   const renderFamilyUnit = (node: TreeNode): React.ReactNode => {
     const hasChildren = node.children.length > 0;
     const hasSpouses = node.spouses.length > 0;
 
     return (
       <div key={node.person.id} className="flex flex-col items-center">
-        {/* Connection line from above */}
-        {node.level > 0 && (
-          <div className="absolute -top-3 left-1/2 w-px h-3 bg-stone-400" />
-        )}
-        
-        {/* Main parent box */}
+        {/* Main parent box - compact */}
         <div className={`
-          relative bg-white rounded-xl border-2 shadow-sm p-2
-          ${node.level === 0 ? 'border-amber-400 shadow-amber-100' : 'border-stone-300'}
+          relative bg-white rounded-lg border shadow-sm p-1
+          ${node.level === 0 ? 'border-amber-400' : 'border-stone-300'}
         `}>
           <div className="flex flex-col items-center">
             {/* Main person */}
@@ -148,9 +143,9 @@ export default function FamilyTree ({
               isCompact
             />
 
-            {/* Spouses */}
+            {/* Spouses - compact */}
             {hasSpouses && (
-              <div className="flex gap-1 mt-1">
+              <div className="flex gap-0.5 mt-0.5">
                 {node.spouses.map((spouse, idx) => (
                   <FamilyNodeCard
                     key={spouse.id}
@@ -167,28 +162,27 @@ export default function FamilyTree ({
           </div>
         </div>
 
-        {/* Children container with rectangular box */}
+        {/* Children container - compact */}
         {hasChildren && (
-          <div className="mt-2">
-            {/* Vertical line to children */}
-            <div className="absolute left-1/2 -top-2 w-px h-2 bg-stone-400" />
+          <div className="mt-1">
+            {/* Vertical line */}
+            <div className="w-px h-1 bg-stone-400" />
             
-            {/* Children box - rectangular container */}
-            <div className="bg-stone-50 rounded-lg border-2 border-dashed border-stone-300 p-3 min-w-[200px]">
-              {/* Generation label */}
-              <div className="text-center text-xs text-stone-500 font-medium mb-2">
+            {/* Children box */}
+            <div className="bg-stone-50 rounded border border-dashed border-stone-300 p-2 min-w-[150px]">
+              {/* Generation label - smaller */}
+              <div className="text-center text-[10px] text-stone-500 font-medium mb-1">
                 Thế hệ {node.level + 1}
               </div>
               
-              {/* Children in a grid/flex layout */}
-              <div className="flex flex-wrap justify-center gap-2">
+              {/* Children - compact grid */}
+              <div className="flex flex-wrap justify-center gap-1">
                 {node.children.map((child, idx) => (
                   <div key={child.person.id} className="flex flex-col items-center">
-                    {/* Line to child */}
-                    <div className="w-px h-2 bg-stone-300" />
+                    <div className="w-px h-1 bg-stone-300" />
                     
-                    {/* Child with their spouse box */}
-                    <div className="bg-white rounded-lg border border-stone-200 shadow-sm p-1.5">
+                    {/* Child box - compact */}
+                    <div className="bg-white rounded border border-stone-200 p-1">
                       <div className="flex flex-col items-center">
                         <FamilyNodeCard
                           person={child.person}
@@ -196,7 +190,7 @@ export default function FamilyTree ({
                           isCompact
                         />
                         
-                        {/* Child's spouse */}
+                        {/* Child's spouse - compact */}
                         {child.spouses.length > 0 && (
                           <div className="flex gap-0.5 mt-0.5">
                             {child.spouses.map((spouse, sIdx) => (
@@ -214,9 +208,9 @@ export default function FamilyTree ({
                         )}
                       </div>
                       
-                      {/* Recursively render grandchildren */}
+                      {/* Grandchildren - compact */}
                       {child.children.length > 0 && (
-                        <div className="mt-1 pt-1 border-t border-stone-100">
+                        <div className="mt-0.5 pt-0.5 border-t border-stone-100">
                           {renderFamilyUnit(child)}
                         </div>
                       )}
@@ -285,8 +279,8 @@ export default function FamilyTree ({
               </button>
             </div>
             <div className="p-6">
-              <div className="mx-auto bg-white" style={{width: '1041px', height: '704px', transform: 'scale(0.8)', transformOrigin: 'top center', overflow: 'hidden'}}>
-                <div className="flex flex-col items-center justify-start min-h-[704px] p-8 bg-gradient-to-b from-stone-50 to-stone-100">
+              <div className="mx-auto bg-white" style={{width: '1041px', height: '704px', overflow: 'hidden'}}>
+                <div className="flex flex-col items-center justify-start min-h-[704px] p-4 bg-gradient-to-b from-stone-50 to-stone-100">
                   <h1 className="text-2xl font-bold text-stone-800 mb-6">Gia phả</h1>
                   <div className="flex justify-center gap-8 flex-wrap">
                     {treeData.map((tree, idx) => (
@@ -332,7 +326,6 @@ export default function FamilyTree ({
             ))}
           </div>
         </div>
-      </div>
-    </div>
+      </div>    </div>
   );
 }
