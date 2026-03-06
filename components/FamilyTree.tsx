@@ -66,14 +66,12 @@ export default function FamilyTree({
       });
 
       Object.values(levelMap).forEach((levelNodes) => {
-        // Reset min-height first to get natural height
         levelNodes.forEach((node) => {
           const innerFlex = node.firstElementChild as HTMLElement;
           if (innerFlex) innerFlex.style.minHeight = "0px";
         });
 
         let maxHeight = 0;
-        // Find the maximum height in this level
         levelNodes.forEach((node) => {
           const innerFlex = node.firstElementChild as HTMLElement;
           if (innerFlex) {
@@ -81,7 +79,6 @@ export default function FamilyTree({
           }
         });
 
-        // Apply max height to all nodes in this level
         levelNodes.forEach((node) => {
           const innerFlex = node.firstElementChild as HTMLElement;
           if (innerFlex && maxHeight > 0) {
@@ -98,16 +95,7 @@ export default function FamilyTree({
       clearTimeout(timeoutId);
       window.removeEventListener("resize", equalizeHeights);
     };
-  }, [
-    roots,
-    personsMap,
-    relationships,
-    showAvatar,
-    scale,
-    hideSpouses,
-    hideMales,
-    hideFemales,
-  ]);
+  }, [roots, personsMap, relationships, showAvatar, scale, hideSpouses, hideMales, hideFemales]);
 
   const adj = useMemo(
     () => buildAdjacencyLists(relationships, personsMap),
@@ -121,14 +109,12 @@ export default function FamilyTree({
       hideFemales,
     });
 
-  // Recursive function for rendering nodes
-  // Tracks visited IDs to prevent infinite loops from circular relationships
   const renderTreeNode = (
     personId: string,
     visited: Set<string> = new Set(),
     level: number = 0,
   ): React.ReactNode => {
-    if (visited.has(personId)) return null; // cycle guard
+    if (visited.has(personId)) return null;
     visited.add(personId);
 
     const data = getTreeData(personId);
@@ -140,11 +126,10 @@ export default function FamilyTree({
           className="node-container inline-flex flex-col items-center"
           data-level={level}
         >
-          {/* Main Person & Spouses Row */}
           <div
-            className={`flex relative z-10 items-stretch h-full${showAvatar ? " bg-white rounded-2xl shadow-md border border-stone-200/80 transition-opacity" : ""}`}
+            className={`flex relative z-10 items-stretch h-full${showAvatar ? " bg-white/95 rounded-xl shadow-md border border-stone-200/50 backdrop-blur-sm" : ""}`}
           >
-            <FamilyNodeCard person={data.person} level={level} />
+            <FamilyNodeCard person={data.person} level={level} isCompact />
 
             {data.spouses.length > 0 &&
               data.spouses.map((spouseData, idx) => (
@@ -156,13 +141,13 @@ export default function FamilyTree({
                     role={spouseData.person.gender === "male" ? "Chồng" : "Vợ"}
                     note={spouseData.note}
                     level={level}
+                    isCompact
                   />
                 </div>
               ))}
           </div>
         </div>
 
-        {/* Render Children (if any) */}
         {data.children.length > 0 && (
           <ul>
             {data.children.map((child) => (
@@ -201,20 +186,19 @@ export default function FamilyTree({
 
       <div
         ref={containerRef}
-        className={`w-full h-full overflow-auto bg-stone-50 ${isPressed ? "cursor-grabbing" : "cursor-grab"}`}
+        className={`w-full h-full overflow-auto bg-gradient-to-br from-stone-50 via-stone-100 to-stone-200 ${isPressed ? "cursor-grabbing" : "cursor-grab"}`}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUpOrLeave}
         onMouseLeave={handleMouseUpOrLeave}
         onClickCapture={handleClickCapture}
-        onDragStart={(e) => e.preventDefault()} // Prevent browser default dragging of links/images
+        onDragStart={(e) => e.preventDefault()}
       >
-        {/* We use a style block to inject the CSS logic for the family tree lines */}
         <style
           dangerouslySetInnerHTML={{
             __html: `
         .css-tree ul {
-          padding-top: 30px; 
+          padding-top: 20px; 
           position: relative;
           display: flex;
           justify-content: center;
@@ -226,22 +210,20 @@ export default function FamilyTree({
           float: left; text-align: center;
           list-style-type: none;
           position: relative;
-          padding: 30px 5px 0 5px;
+          padding: 20px 3px 0 3px;
         }
 
-        /* Connecting lines */
         .css-tree li::before, .css-tree li::after {
           content: '';
           position: absolute; top: 0; right: 50%;
-          border-top: 2px solid #d6d3d1;
-          width: 50%; height: 30px;
+          border-top: 1.5px solid #cbd5e1;
+          width: 50%; height: 20px;
         }
         .css-tree li::after {
           right: auto; left: 50%;
-          border-left: 2px solid #d6d3d1;
+          border-left: 1.5px solid #cbd5e1;
         }
 
-        /* Remove left-right connectors from elements without siblings */
         .css-tree li:only-child::after {
           display: none;
         }
@@ -250,12 +232,11 @@ export default function FamilyTree({
           position: absolute;
           top: 0;
           left: 50%;
-          border-left: 2px solid #d6d3d1;
+          border-left: 1.5px solid #cbd5e1;
           width: 0;
-          height: 30px;
+          height: 20px;
         }
 
-        /* Remove top connector from first child */
         .css-tree ul:first-child > li {
           padding-top: 0px;
         }
@@ -263,39 +244,31 @@ export default function FamilyTree({
           display: none;
         }
 
-        /* Remove left connector from first child and right connector from last child */
         .css-tree li:first-child::before, .css-tree li:last-child::after {
           border: 0 none;
         }
 
-        /* Add back the vertical connector to the last nodes */
         .css-tree li:last-child::before {
-          border-right: 2px solid #d6d3d1;
-          border-radius: 0 12px 0 0;
+          border-right: 1.5px solid #cbd5e1;
+          border-radius: 0 8px 0 0;
         }
         .css-tree li:first-child::after {
-          border-radius: 12px 0 0 0;
+          border-radius: 8px 0 0 0;
         }
 
-        /* Downward connectors from parents */
         .css-tree ul ul::before {
           content: '';
           position: absolute; top: 0; left: 50%;
-          border-left: 2px solid #d6d3d1;
-          width: 0; height: 30px;
+          border-left: 1.5px solid #cbd5e1;
+          width: 0; height: 20px;
         }
       `,
           }}
         />
 
-        {/* 
-        Use w-max to prevent wrapping and allow scrolling. 
-        mx-auto centers it if smaller than screen. 
-        p-8 adds padding inside scroll area.
-      */}
         <div
           id="export-container"
-          className={`w-max min-w-full mx-auto p-4 css-tree transition-all duration-200 ${isDragging ? "opacity-90" : ""}`}
+          className={`w-max min-w-full mx-auto p-2 css-tree transition-all duration-200 ${isDragging ? "opacity-90" : ""}`}
           style={{
             transform: `scale(${scale})`,
             transformOrigin: "top center",
