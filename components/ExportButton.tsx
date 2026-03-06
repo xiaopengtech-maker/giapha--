@@ -43,10 +43,15 @@ export default function ExportButton() {
 
       element.classList.add("exporting");
 
+      // Get computed styles to ensure proper export
+      const computedStyle = window.getComputedStyle(element);
+      const hasTransparentBg = computedStyle.backgroundColor === "transparent" || 
+                               computedStyle.backgroundColor === "rgba(0, 0, 0, 0)";
+      
       const exportOptions = {
         cacheBust: true,
-        backgroundColor: "#f5f5f4",
-        pixelRatio: 2,
+        backgroundColor: hasTransparentBg ? "#f5f5f4" : computedStyle.backgroundColor,
+        pixelRatio: 3, // Higher quality for better text rendering
         width: element.scrollWidth,
         height: element.scrollHeight,
         style: {
@@ -54,6 +59,13 @@ export default function ExportButton() {
           transformOrigin: "top left",
           width: `${element.scrollWidth}px`,
           height: `${element.scrollHeight}px`,
+          // Ensure all child elements are visible
+          overflow: "visible",
+        },
+        filter: (node: HTMLElement) => {
+          // Filter out any elements that shouldn't be in the export
+          if (node.classList?.contains("no-export")) return false;
+          return true;
         },
       };
 
