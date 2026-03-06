@@ -18,7 +18,7 @@ interface TreeNode {
   position: number;
 }
 
-export default function FamilyTree({
+export default function FamilyTree ({
   personsMap,
   relationships,
   roots,
@@ -35,6 +35,7 @@ export default function FamilyTree({
   const [hideFemales, setHideFemales] = useState(false);
   const [treeData, setTreeData] = useState<TreeNode[]>([]);
   const [maxLevel, setMaxLevel] = useState(0);
+  const [showPreview, setShowPreview] = useState(false);
 
   const { showAvatar } = useDashboard();
 
@@ -119,90 +120,107 @@ export default function FamilyTree({
     setMaxLevel(buildTree.maxLevel);
   }, [buildTree]);
 
-  // Render a single node and its children in vertical layout
-  const renderVerticalNode = (node: TreeNode, isLast: boolean): React.ReactNode => {
+  // Render a family unit with rectangular box
+  const renderFamilyUnit = (node: TreeNode): React.ReactNode => {
     const hasChildren = node.children.length > 0;
+    const hasSpouses = node.spouses.length > 0;
 
     return (
-      <div key={node.person.id} className="relative">
-        {/* Connection line from parent */}
+      <div key={node.person.id} className="flex flex-col items-center">
+        {/* Connection line from above */}
         {node.level > 0 && (
-          <>
-            <div
-              className="absolute border-l-2 border-stone-300"
-              style={{
-                left: "50%",
-                top: isLast ? "-20px" : "-20px",
-                bottom: isLast ? "auto" : "-20px",
-                height: isLast ? "44px" : "100%",
-                transform: "translateX(-50%)",
-              }}
-            />
-            <div
-              className="absolute border-b-2 border-stone-300 rounded-bl-xl"
-              style={{
-                left: "50%",
-                top: "24px",
-                width: "50%",
-                height: "20px",
-                transform: "translateX(-50%)",
-              }}
-            />
-          </>
+          <div className="absolute -top-3 left-1/2 w-px h-3 bg-stone-400" />
         )}
+        
+        {/* Main parent box */}
+        <div className={`
+          relative bg-white rounded-xl border-2 shadow-sm p-2
+          ${node.level === 0 ? 'border-amber-400 shadow-amber-100' : 'border-stone-300'}
+        `}>
+          <div className="flex flex-col items-center">
+            {/* Main person */}
+            <FamilyNodeCard
+              person={node.person}
+              level={node.level}
+              isCompact
+            />
 
-        {/* Main person */}
-        <div className="flex flex-col items-center">
-          <FamilyNodeCard
-            person={node.person}
-            level={node.level}
-            isCompact
-          />
-
-          {/* Spouses */}
-          {node.spouses.length > 0 && (
-            <div className="flex gap-1 mt-1">
-              {node.spouses.map((spouse, idx) => (
-                <FamilyNodeCard
-                  key={spouse.id}
-                  person={spouse}
-                  role={spouse.gender === "male" ? "Chồng" : "Vợ"}
-                  level={node.level}
-                  isCompact
-                  isPlusVisible={idx > 0}
-                  isRingVisible={idx === 0}
-                />
-              ))}
-            </div>
-          )}
+            {/* Spouses */}
+            {hasSpouses && (
+              <div className="flex gap-1 mt-1">
+                {node.spouses.map((spouse, idx) => (
+                  <FamilyNodeCard
+                    key={spouse.id}
+                    person={spouse}
+                    role={spouse.gender === "male" ? "Chồng" : "Vợ"}
+                    level={node.level}
+                    isCompact
+                    isPlusVisible={idx > 0}
+                    isRingVisible={idx === 0}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Children - vertical layout */}
+        {/* Children container with rectangular box */}
         {hasChildren && (
-          <div className="mt-2 relative">
-            {/* Horizontal line connecting children */}
-            {node.children.length > 1 && (
-              <div
-                className="absolute border-t-2 border-stone-300"
-                style={{
-                  left: `${100 / node.children.length / 2}%`,
-                  right: `${100 / node.children.length / 2}%`,
-                  top: "-2px",
-                }}
-              />
-            )}
+          <div className="mt-2">
+            {/* Vertical line to children */}
+            <div className="absolute left-1/2 -top-2 w-px h-2 bg-stone-400" />
             
-            <div className="flex justify-center gap-2 flex-wrap">
-              {node.children.map((child, idx) => (
-                <div key={child.person.id} className="flex flex-col items-center">
-                  {/* Vertical line from parent to child */}
-                  <div
-                    className="w-px bg-stone-300"
-                    style={{ height: "8px" }}
-                  />
-                  {renderVerticalNode(child, idx === node.children.length - 1)}
-                </div>
-              ))}
+            {/* Children box - rectangular container */}
+            <div className="bg-stone-50 rounded-lg border-2 border-dashed border-stone-300 p-3 min-w-[200px]">
+              {/* Generation label */}
+              <div className="text-center text-xs text-stone-500 font-medium mb-2">
+                Thế hệ {node.level + 1}
+              </div>
+              
+              {/* Children in a grid/flex layout */}
+              <div className="flex flex-wrap justify-center gap-2">
+                {node.children.map((child, idx) => (
+                  <div key={child.person.id} className="flex flex-col items-center">
+                    {/* Line to child */}
+                    <div className="w-px h-2 bg-stone-300" />
+                    
+                    {/* Child with their spouse box */}
+                    <div className="bg-white rounded-lg border border-stone-200 shadow-sm p-1.5">
+                      <div className="flex flex-col items-center">
+                        <FamilyNodeCard
+                          person={child.person}
+                          level={child.level}
+                          isCompact
+                        />
+                        
+                        {/* Child's spouse */}
+                        {child.spouses.length > 0 && (
+                          <div className="flex gap-0.5 mt-0.5">
+                            {child.spouses.map((spouse, sIdx) => (
+                              <FamilyNodeCard
+                                key={spouse.id}
+                                person={spouse}
+                                role={spouse.gender === "male" ? "Chồng" : "Vợ"}
+                                level={child.level}
+                                isCompact
+                                isPlusVisible={sIdx > 0}
+                                isRingVisible={sIdx === 0}
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Recursively render grandchildren */}
+                      {child.children.length > 0 && (
+                        <div className="mt-1 pt-1 border-t border-stone-100">
+                          {renderFamilyUnit(child)}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
@@ -218,8 +236,7 @@ export default function FamilyTree({
     );
   }
 
-  // Calculate dimensions for the vertical tree
-  const nodeHeight = 100; // Height per node including spacing
+  const nodeHeight = 120;
   const treeHeight = (maxLevel + 1) * nodeHeight + 100;
 
   return (
@@ -237,6 +254,53 @@ export default function FamilyTree({
         setHideFemales={setHideFemales}
         canEdit={canEdit}
       />
+
+      {/* Preview Button */}
+      <div className="absolute top-16 right-4 z-20">
+        <button
+          onClick={() => setShowPreview(!showPreview)}
+          className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg shadow-md text-sm font-medium flex items-center gap-2 transition-colors"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+          Xem trước ảnh
+        </button>
+      </div>
+
+      {/* Preview Modal */}
+      {showPreview && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowPreview(false)}>
+          <div className="bg-white rounded-xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-auto" onClick={e => e.stopPropagation()}>
+            <div className="p-4 border-b border-stone-200 flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-stone-800">Xem trước gia phả</h3>
+              <button onClick={() => setShowPreview(false)} className="text-stone-500 hover:text-stone-700">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-6">
+              <div className="mx-auto bg-white" style={{width: '1041px', height: '704px', transform: 'scale(0.8)', transformOrigin: 'top center', overflow: 'hidden'}}>
+                <div className="flex flex-col items-center justify-start min-h-[704px] p-8 bg-gradient-to-b from-stone-50 to-stone-100">
+                  <h1 className="text-2xl font-bold text-stone-800 mb-6">Gia phả</h1>
+                  <div className="flex justify-center gap-8 flex-wrap">
+                    {treeData.map((tree, idx) => (
+                      <div key={idx} className="flex flex-col items-center">
+                        {renderFamilyUnit(tree)}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 text-center text-sm text-stone-500">
+                Kích thước: 1041 x 704 pixels
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div
         ref={containerRef}
@@ -257,11 +321,10 @@ export default function FamilyTree({
             transformOrigin: "top center",
           }}
         >
-          {/* Render each root tree */}
           <div className="flex justify-center gap-8 flex-wrap">
             {treeData.map((tree, idx) => (
               <div key={idx} className="flex flex-col items-center">
-                {renderVerticalNode(tree, true)}
+                {renderFamilyUnit(tree)}
               </div>
             ))}
           </div>
