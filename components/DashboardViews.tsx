@@ -82,12 +82,13 @@ export default function DashboardViews({
         )}
 
         <div className="flex-1 w-full relative z-10">
-          {currentView === "tree" && (
+          {(currentView === "tree" || currentView === "tree-vertical" || currentView === "tree-horizontal" || currentView === "tree-circular" || currentView === "tree-pentagonal") && (
             <FamilyTree
               personsMap={personsMap}
               relationships={relationships}
               roots={roots}
               canEdit={canEdit}
+              layout={currentView.replace("tree-", "") as "vertical" | "horizontal" | "circular" | "pentagonal" | "hexagonal" || "vertical"}
             />
           )}
           {currentView === "mindmap" && (

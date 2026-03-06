@@ -23,11 +23,13 @@ export default function FamilyTree ({
   relationships,
   roots,
   canEdit,
+  layout = "vertical",
 }: {
   personsMap: Map<string, Person>;
   relationships: Relationship[];
   roots: Person[];
   canEdit?: boolean;
+  layout?: "vertical" | "horizontal" | "circular" | "pentagonal" | "hexagonal";
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hideSpouses, setHideSpouses] = useState(false);
