@@ -2,7 +2,7 @@
 
 import { Person, Relationship } from "@/types";
 import { formatDisplayDate } from "@/utils/dateHelpers";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { memo, useState } from "react";
@@ -30,14 +30,14 @@ export const getTreeData = (personId: string, ctx: MindmapContextData) => {
   });
 };
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, x: -20, scale: 0.9 },
   visible: { 
     opacity: 1, 
     x: 0, 
     scale: 1,
     transition: {
-      type: "spring",
+      type: "spring" as const,
       stiffness: 300,
       damping: 25
     }
