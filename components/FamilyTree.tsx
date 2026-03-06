@@ -73,17 +73,13 @@ export default function FamilyTree ({
       hideFemales,
     });
 
-  // Build tree structure
+  // Build tree structure - sorted by birth year
   const buildTree = useMemo(() => {
     if (roots.length === 0) return { trees: [], maxLevel: 0 };
 
-    const visited = new Set<string>();
     let maxLvl = 0;
 
     const buildNode = (personId: string, level: number, position: number): TreeNode | null => {
-      if (visited.has(personId)) return null;
-      visited.add(personId);
-
       const data = getTreeData(personId);
       if (!data.person) return null;
 
@@ -91,8 +87,15 @@ export default function FamilyTree ({
 
       const spouses = hideSpouses ? [] : data.spouses.map(s => s.person);
 
+      // Sort children by birth year (oldest first)
+      const sortedChildren = [...data.children].sort((a, b) => {
+        const aYear = a.birth_year || 9999;
+        const bYear = b.birth_year || 9999;
+        return aYear - bYear;
+      });
+
       const children: TreeNode[] = [];
-      data.children.forEach((child, idx) => {
+      sortedChildren.forEach((child, idx) => {
         const childNode = buildNode(child.id, level + 1, idx);
         if (childNode) children.push(childNode);
       });
