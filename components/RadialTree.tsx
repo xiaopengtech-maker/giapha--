@@ -289,19 +289,19 @@ export default function RadialTree({
       >
         <div
           id="export-container"
-          className={`relative transition-all duration-200 ${isDragging ? "opacity-90" : ""}`}
+          className={`relative mx-auto transition-all duration-200 ${isDragging ? "opacity-90" : ""}`}
           style={{
             width: containerSize,
             height: containerSize,
             minWidth: containerSize,
             minHeight: containerSize,
             transform: `scale(${scale})`,
-            transformOrigin: "center center",
+            transformOrigin: "top center",
           }}
         >
           {/* SVG Layer for connections */}
           <svg
-            className="absolute inset-0 pointer-events-none"
+            className="absolute top-0 left-0 pointer-events-none"
             style={{
               width: containerSize,
               height: containerSize,
@@ -314,7 +314,7 @@ export default function RadialTree({
 
           {/* Nodes Layer */}
           <div
-            className="absolute inset-0"
+            className="absolute top-0 left-0"
             style={{
               width: containerSize,
               height: containerSize,
