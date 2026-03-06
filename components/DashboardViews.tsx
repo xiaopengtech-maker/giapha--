@@ -9,7 +9,6 @@ import dynamic from "next/dynamic";
 
 const FamilyTree = dynamic(() => import("@/components/FamilyTree"));
 const MindmapTree = dynamic(() => import("@/components/MindmapTree"));
-const RadialTree = dynamic(() => import("@/components/RadialTree"));
 
 interface DashboardViewsProps {
   persons: Person[];
@@ -93,14 +92,6 @@ export default function DashboardViews({
           )}
           {currentView === "mindmap" && (
             <MindmapTree
-              personsMap={personsMap}
-              relationships={relationships}
-              roots={roots}
-              canEdit={canEdit}
-            />
-          )}
-          {currentView === "radial" && (
-            <RadialTree
               personsMap={personsMap}
               relationships={relationships}
               roots={roots}

@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Circle, List, ListTree, Network } from "lucide-react";
+import { List, ListTree, Network } from "lucide-react";
 import { useDashboard } from "./DashboardContext";
 
-export type ViewMode = "list" | "tree" | "mindmap" | "radial";
+export type ViewMode = "list" | "tree" | "mindmap";
 
 export default function ViewToggle() {
   const { view: currentView, setView } = useDashboard();
@@ -24,11 +24,6 @@ export default function ViewToggle() {
       id: "mindmap",
       label: "Mindmap",
       icon: <ListTree className="size-6 sm:size-4" />,
-    },
-    {
-      id: "radial",
-      label: "Tròn",
-      icon: <Circle className="size-6 sm:size-4" />,
     },
   ] as const;
 

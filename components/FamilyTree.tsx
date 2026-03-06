@@ -198,7 +198,7 @@ export default function FamilyTree({
           dangerouslySetInnerHTML={{
             __html: `
         .css-tree ul {
-          padding-top: 20px; 
+          padding-top: 8px; 
           position: relative;
           display: flex;
           justify-content: center;
@@ -210,14 +210,14 @@ export default function FamilyTree({
           float: left; text-align: center;
           list-style-type: none;
           position: relative;
-          padding: 20px 3px 0 3px;
+          padding: 8px 2px 0 2px;
         }
 
         .css-tree li::before, .css-tree li::after {
           content: '';
           position: absolute; top: 0; right: 50%;
           border-top: 1.5px solid #cbd5e1;
-          width: 50%; height: 20px;
+          width: 50%; height: 8px;
         }
         .css-tree li::after {
           right: auto; left: 50%;
@@ -234,7 +234,7 @@ export default function FamilyTree({
           left: 50%;
           border-left: 1.5px solid #cbd5e1;
           width: 0;
-          height: 20px;
+          height: 8px;
         }
 
         .css-tree ul:first-child > li {
@@ -260,7 +260,7 @@ export default function FamilyTree({
           content: '';
           position: absolute; top: 0; left: 50%;
           border-left: 1.5px solid #cbd5e1;
-          width: 0; height: 20px;
+          width: 0; height: 8px;
         }
       `,
           }}
