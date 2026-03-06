@@ -10,6 +10,14 @@ import TreeToolbar from "./TreeToolbar";
 
 import { buildAdjacencyLists, getFilteredTreeData } from "@/utils/treeHelpers";
 
+interface TreeNode {
+  person: Person;
+  spouses: Person[];
+  children: TreeNode[];
+  level: number;
+  position: number;
+}
+
 export default function FamilyTree({
   personsMap,
   relationships,
@@ -25,6 +33,8 @@ export default function FamilyTree({
   const [hideSpouses, setHideSpouses] = useState(false);
   const [hideMales, setHideMales] = useState(false);
   const [hideFemales, setHideFemales] = useState(false);
+  const [treeData, setTreeData] = useState<TreeNode[]>([]);
+  const [maxLevel, setMaxLevel] = useState(0);
 
   const { showAvatar } = useDashboard();
 
@@ -50,52 +60,6 @@ export default function FamilyTree({
     }
   }, [roots]);
 
-  useEffect(() => {
-    const equalizeHeights = () => {
-      if (!containerRef.current) return;
-      const nodes = containerRef.current.querySelectorAll(".node-container");
-      const levelMap: Record<string, HTMLElement[]> = {};
-
-      nodes.forEach((node) => {
-        const level = node.getAttribute("data-level");
-        if (level != null) {
-          if (!levelMap[level]) levelMap[level] = [];
-          levelMap[level].push(node as HTMLElement);
-        }
-      });
-
-      Object.values(levelMap).forEach((levelNodes) => {
-        levelNodes.forEach((node) => {
-          const innerFlex = node.firstElementChild as HTMLElement;
-          if (innerFlex) innerFlex.style.minHeight = "0px";
-        });
-
-        let maxHeight = 0;
-        levelNodes.forEach((node) => {
-          const innerFlex = node.firstElementChild as HTMLElement;
-          if (innerFlex) {
-            maxHeight = Math.max(maxHeight, innerFlex.offsetHeight);
-          }
-        });
-
-        levelNodes.forEach((node) => {
-          const innerFlex = node.firstElementChild as HTMLElement;
-          if (innerFlex && maxHeight > 0) {
-            innerFlex.style.minHeight = `${maxHeight}px`;
-          }
-        });
-      });
-    };
-
-    const timeoutId = setTimeout(equalizeHeights, 50);
-    window.addEventListener("resize", equalizeHeights);
-
-    return () => {
-      clearTimeout(timeoutId);
-      window.removeEventListener("resize", equalizeHeights);
-    };
-  }, [roots, personsMap, relationships, showAvatar, scale, hideSpouses, hideMales, hideFemales]);
-
   const adj = useMemo(
     () => buildAdjacencyLists(relationships, personsMap),
     [relationships, personsMap],
@@ -108,64 +72,155 @@ export default function FamilyTree({
       hideFemales,
     });
 
-  const renderTreeNode = (
-    personId: string,
-    visited: Set<string> = new Set(),
-    level: number = 0,
-  ): React.ReactNode => {
-    if (visited.has(personId)) return null;
-    visited.add(personId);
+  // Build tree structure
+  const buildTree = useMemo(() => {
+    if (roots.length === 0) return { trees: [], maxLevel: 0 };
 
-    const data = getTreeData(personId);
-    if (!data.person) return null;
+    const visited = new Set<string>();
+    let maxLvl = 0;
+
+    const buildNode = (personId: string, level: number, position: number): TreeNode | null => {
+      if (visited.has(personId)) return null;
+      visited.add(personId);
+
+      const data = getTreeData(personId);
+      if (!data.person) return null;
+
+      maxLvl = Math.max(maxLvl, level);
+
+      const spouses = hideSpouses ? [] : data.spouses.map(s => s.person);
+
+      const children: TreeNode[] = [];
+      data.children.forEach((child, idx) => {
+        const childNode = buildNode(child.id, level + 1, idx);
+        if (childNode) children.push(childNode);
+      });
+
+      return {
+        person: data.person,
+        spouses,
+        children,
+        level,
+        position,
+      };
+    };
+
+    const trees: TreeNode[] = [];
+    roots.forEach((root, idx) => {
+      const tree = buildNode(root.id, 0, idx);
+      if (tree) trees.push(tree);
+    });
+
+    return { trees, maxLevel: maxLvl };
+  }, [roots, personsMap, relationships, hideSpouses, hideMales, hideFemales, adj]);
+
+  useEffect(() => {
+    setTreeData(buildTree.trees);
+    setMaxLevel(buildTree.maxLevel);
+  }, [buildTree]);
+
+  // Render a single node and its children in vertical layout
+  const renderVerticalNode = (node: TreeNode, isLast: boolean): React.ReactNode => {
+    const hasChildren = node.children.length > 0;
 
     return (
-      <li>
-        <div
-          className="node-container inline-flex flex-col items-center"
-          data-level={level}
-        >
-          <div
-            className={`flex relative z-10 items-stretch h-full${showAvatar ? " bg-white/95 rounded-xl shadow-md border border-stone-200/50 backdrop-blur-sm" : ""}`}
-          >
-            <FamilyNodeCard person={data.person} level={level} isCompact />
+      <div key={node.person.id} className="relative">
+        {/* Connection line from parent */}
+        {node.level > 0 && (
+          <>
+            <div
+              className="absolute border-l-2 border-stone-300"
+              style={{
+                left: "50%",
+                top: isLast ? "-20px" : "-20px",
+                bottom: isLast ? "auto" : "-20px",
+                height: isLast ? "44px" : "100%",
+                transform: "translateX(-50%)",
+              }}
+            />
+            <div
+              className="absolute border-b-2 border-stone-300 rounded-bl-xl"
+              style={{
+                left: "50%",
+                top: "24px",
+                width: "50%",
+                height: "20px",
+                transform: "translateX(-50%)",
+              }}
+            />
+          </>
+        )}
 
-            {data.spouses.length > 0 &&
-              data.spouses.map((spouseData, idx) => (
-                <div key={spouseData.person.id} className="flex relative">
-                  <FamilyNodeCard
-                    isRingVisible={idx === 0}
-                    isPlusVisible={idx > 0}
-                    person={spouseData.person}
-                    role={spouseData.person.gender === "male" ? "Chồng" : "Vợ"}
-                    note={spouseData.note}
-                    level={level}
-                    isCompact
-                  />
-                </div>
+        {/* Main person */}
+        <div className="flex flex-col items-center">
+          <FamilyNodeCard
+            person={node.person}
+            level={node.level}
+            isCompact
+          />
+
+          {/* Spouses */}
+          {node.spouses.length > 0 && (
+            <div className="flex gap-1 mt-1">
+              {node.spouses.map((spouse, idx) => (
+                <FamilyNodeCard
+                  key={spouse.id}
+                  person={spouse}
+                  role={spouse.gender === "male" ? "Chồng" : "Vợ"}
+                  level={node.level}
+                  isCompact
+                  isPlusVisible={idx > 0}
+                  isRingVisible={idx === 0}
+                />
               ))}
-          </div>
+            </div>
+          )}
         </div>
 
-        {data.children.length > 0 && (
-          <ul>
-            {data.children.map((child) => (
-              <React.Fragment key={child.id}>
-                {renderTreeNode(child.id, new Set(visited), level + 1)}
-              </React.Fragment>
-            ))}
-          </ul>
+        {/* Children - vertical layout */}
+        {hasChildren && (
+          <div className="mt-2 relative">
+            {/* Horizontal line connecting children */}
+            {node.children.length > 1 && (
+              <div
+                className="absolute border-t-2 border-stone-300"
+                style={{
+                  left: `${100 / node.children.length / 2}%`,
+                  right: `${100 / node.children.length / 2}%`,
+                  top: "-2px",
+                }}
+              />
+            )}
+            
+            <div className="flex justify-center gap-2 flex-wrap">
+              {node.children.map((child, idx) => (
+                <div key={child.person.id} className="flex flex-col items-center">
+                  {/* Vertical line from parent to child */}
+                  <div
+                    className="w-px bg-stone-300"
+                    style={{ height: "8px" }}
+                  />
+                  {renderVerticalNode(child, idx === node.children.length - 1)}
+                </div>
+              ))}
+            </div>
+          </div>
         )}
-      </li>
+      </div>
     );
   };
 
-  if (roots.length === 0)
+  if (roots.length === 0) {
     return (
       <div className="text-center p-10 text-stone-500">
         Không tìm thấy dữ liệu.
       </div>
     );
+  }
+
+  // Calculate dimensions for the vertical tree
+  const nodeHeight = 100; // Height per node including spacing
+  const treeHeight = (maxLevel + 1) * nodeHeight + 100;
 
   return (
     <div className="w-full h-full relative">
@@ -193,112 +248,23 @@ export default function FamilyTree({
         onClickCapture={handleClickCapture}
         onDragStart={(e) => e.preventDefault()}
       >
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-        .css-tree ul {
-          padding-top: 4px; 
-          position: relative;
-          display: flex;
-          justify-content: center;
-          padding-left: 0;
-          user-select: none;
-          margin: 0;
-          list-style: none;
-        }
-
-        .css-tree li {
-          float: left; text-align: center;
-          list-style-type: none;
-          position: relative;
-          padding: 4px 1px 0 1px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-
-        .css-tree li::before, .css-tree li::after {
-          content: '';
-          position: absolute; top: 0; right: 50%;
-          border-top: 1px solid #cbd5e1;
-          width: 50%; height: 4px;
-        }
-        .css-tree li::after {
-          right: auto; left: 50%;
-          border-left: 1px solid #cbd5e1;
-        }
-
-        .css-tree li:only-child::after {
-          display: none;
-        }
-        .css-tree li:only-child::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 50%;
-          border-left: 1px solid #cbd5e1;
-          width: 0;
-          height: 4px;
-        }
-
-        .css-tree ul:first-child > li {
-          padding-top: 0px;
-        }
-        .css-tree ul:first-child > li::before {
-          display: none;
-        }
-
-        .css-tree li:first-child::before, .css-tree li:last-child::after {
-          border: 0 none;
-        }
-
-        .css-tree li:last-child::before {
-          border-right: 1px solid #cbd5e1;
-          border-radius: 0 4px 0 0;
-        }
-        .css-tree li:first-child::after {
-          border-radius: 4px 0 0 0;
-        }
-
-        .css-tree ul ul::before {
-          content: '';
-          position: absolute; top: 0; left: 50%;
-          border-left: 1px solid #cbd5e1;
-          width: 0; height: 4px;
-        }
-
-        /* Compact mode styles */
-        .css-tree .node-container {
-          margin: 0;
-        }
-        
-        .css-tree .node-container > div {
-          margin: 0;
-        }
-
-        /* Reduce gap between parent and children */
-        .css-tree li > ul {
-          margin-top: 2px;
-        }
-      `,
-          }}
-        />
-
         <div
           id="export-container"
-          className={`w-max min-w-full mx-auto p-1 css-tree transition-all duration-200 ${isDragging ? "opacity-90" : ""}`}
+          className={`relative mx-auto p-8 transition-all duration-200 ${isDragging ? "opacity-90" : ""}`}
           style={{
+            minHeight: treeHeight,
             transform: `scale(${scale})`,
             transformOrigin: "top center",
           }}
         >
-          <ul>
-            {roots.map((root) => (
-              <React.Fragment key={root.id}>
-                {renderTreeNode(root.id)}
-              </React.Fragment>
+          {/* Render each root tree */}
+          <div className="flex justify-center gap-8 flex-wrap">
+            {treeData.map((tree, idx) => (
+              <div key={idx} className="flex flex-col items-center">
+                {renderVerticalNode(tree, true)}
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
     </div>
