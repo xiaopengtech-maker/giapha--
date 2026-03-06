@@ -1,39 +1,50 @@
-# Redesign Project Plan
+# Kế hoạch thiết kế lại giao diện GiaPhaOS
 
-## Overview
-Redesign the entire GiaPhaOS interface with a fresh, modern look using emerald green + soft gold color palette while maintaining elegance.
+## 1. Cập nhật Global Styles (globals.css)
+- Cải thiện color palette với nhiều màu sắc hơn
+- Thêm nhiều animation và transition đẹp hơn
+- Cải thiện button, card, input styles
 
-## Design System Changes
-- [x] **Colors**: Change from amber/stone to emerald/green palette
-  - Primary: Emerald green
-  - Secondary: Soft gold/yellow accents
-  - Background: Light greens and neutral tones
-- [x] **Effects**: Enhanced glassmorphism with dynamic gradients
-- [x] **Typography**: Keep Playfair Display for headings
-- [x] **Components**: Modern cards, buttons, forms with smooth hover effects
+## 2. Trang chủ (Landing Page)
+- Cải thiện Hero section
+- Thêm nhiều hiệu ứng đẹp hơn
+- Cải thiện features section
 
-## Pages Updated
-- [x] Landing Page (app/page.tsx)
-- [x] Login Page (app/login/page.tsx)
-- [x] Dashboard Layout (app/dashboard/layout.tsx)
-- [x] Dashboard Header (components/DashboardHeader.tsx)
-- [x] Header Menu (components/HeaderMenu.tsx)
-- [x] Footer (components/Footer.tsx)
-- [x] Landing Hero (components/LandingHero.tsx)
-- [x] About Page (app/about/page.tsx)
-- [x] BaseToolbar (components/BaseToolbar.tsx)
-- [x] MemberDetailModal (components/MemberDetailModal.tsx)
-- [x] EventsList (components/EventsList.tsx)
-- [x] KinshipFinder (components/KinshipFinder.tsx)
+## 3. Trang đăng nhập/đăng ký
+- Làm đẹp form đăng nhập
+- Thêm hiệu ứng animation
+- Cải thiện mobile responsiveness
 
-## Implementation Steps
-1. [x] Update globals.css with new color variables
-2. [x] Update Landing Page with new color scheme
-3. [x] Update Login Page with new colors
-4. [x] Update Dashboard components
-5. [x] Update Footer
-6. [x] Test and verify all changes
+## 4. Dashboard Layout
+- Cải thiện header và navigation
+- Thêm nhiều hiệu ứng đẹp
+- Cải thiện mobile menu
 
-## GitHub Push
-- [ ] Commit all changes
-- [ ] Push to GitHub repository
+## 5. Dashboard Page (Trang chủ Dashboard)
+- Cải thiện event cards
+- Làm đẹp feature cards
+- Thêm nhiều animation
+
+## 6. Trang thành viên (Members)
+- Cải thiện member list
+- Làm đẹp PersonCard
+- Cải thiện filters và search
+
+## 7. Trang sự kiện (Events)
+- Cải thiện event cards
+- Làm đẹp filter tabs
+
+## 8. Trang tra cứu quan hệ (Kinship)
+- Cải thiện selector
+- Làm đẹp result cards
+
+## 9. Footer
+- Làm đẹp footer
+- Thêm nhiều hiệu ứng
+
+## 10. Các trang khác
+- About page
+- Stats page
+- Users page
+- Data page
+- Lineage page
