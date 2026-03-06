@@ -326,7 +326,8 @@ export default function RadialTree({
                 transform: `translate(${containerSize / 2}px, ${containerSize / 2}px)`,
               }}
             >
-              {roots.map((root) => renderRadialNode(root.id))}
+              {/* Render all nodes in radialData */}
+              {Array.from(radialData.keys()).map((personId) => renderRadialNode(personId))}
             </div>
           </div>
         </div>
