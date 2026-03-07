@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Be_Vietnam_Pro, Space_Grotesk } from "next/font/google";
 import config from "./config";
 import "./globals.css";
 
-const inter = Inter({
+const beVietnamPro = Be_Vietnam_Pro({
   subsets: ["latin", "vietnamese"],
-  variable: "--font-inter",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-body",
 });
-const playfair = Playfair_Display({
+
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin", "vietnamese"],
-  variable: "--font-playfair",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-heading",
 });
 export const metadata: Metadata = {
   title: config.siteName,
@@ -22,9 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi">
+    <html lang="vi" className="scroll-smooth">
       <body
-        className={`${inter.variable} ${playfair.variable} font-sans antialiased relative`}
+        className={`${beVietnamPro.variable} ${spaceGrotesk.variable} font-body antialiased relative bg-slate-50 text-slate-900`}
       >
         {children}
       </body>

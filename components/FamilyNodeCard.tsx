@@ -58,7 +58,7 @@ export default function FamilyNodeCard({
     <div
       onClick={onClickCard}
       className={`
-        group flex flex-col items-center justify-start transition-all duration-300 hover:-translate-y-1 rounded-xl relative h-full
+        group flex flex-col items-center justify-start transition-all duration-300 hover:-translate-y-1 rounded-xl relative h-full font-body
         ${isDeceased ? "grayscale-[0.4] opacity-80" : ""}
         ${showAvatar 
           ? isCompact 
@@ -138,9 +138,9 @@ export default function FamilyNodeCard({
       <div className={`flex flex-col items-center justify-center gap-0.5 w-full ${isCompact ? "px-0.5" : "px-0.5 sm:px-1"} relative z-10`}>
         <div
           className={`
-            font-bold text-center leading-tight transition-all duration-300 cursor-pointer
-            ${onClickName ? "text-stone-800 group-hover:text-amber-700 hover:underline" : "text-stone-800 group-hover:text-amber-800"}
-            ${showAvatar ? "" : "bg-gradient-to-r from-stone-700 to-stone-900 bg-clip-text text-transparent"}
+            font-bold text-center leading-tight transition-all duration-300 cursor-pointer font-heading
+            ${onClickName ? "text-slate-800 group-hover:text-emerald-600 hover:underline" : "text-slate-800 group-hover:text-emerald-700"}
+            ${showAvatar ? "" : "bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent"}
             ${isCompact ? "text-[9px] sm:text-[10px]" : "text-[10px] sm:text-[11px] md:text-xs"}
           `}
           title={person.full_name}
@@ -163,7 +163,7 @@ export default function FamilyNodeCard({
         
         {/* Birth year badge */}
         {person.birth_year && (
-          <span className={`text-stone-500 font-medium bg-stone-100 rounded-full ${isCompact ? "text-[8px] px-1 py-0" : "text-[9px] sm:text-[10px] px-1.5 py-0.5"}`}>
+          <span className={`text-slate-500 font-medium bg-slate-100 rounded-full ${isCompact ? "text-[8px] px-1 py-0" : "text-[9px] sm:text-[10px] px-1.5 py-0.5"}`}>
             {person.birth_year}
           </span>
         )}

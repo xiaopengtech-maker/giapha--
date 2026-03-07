@@ -29,7 +29,7 @@ export default function FamilyTree ({
   relationships: Relationship[];
   roots: Person[];
   canEdit?: boolean;
-  layout?: "vertical" | "horizontal" | "circular" | "pentagonal" | "hexagonal";
+  layout?: "vertical" | "horizontal" | "pentagonal";
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hideSpouses, setHideSpouses] = useState(false);
@@ -132,10 +132,10 @@ export default function FamilyTree ({
 
     return (
       <div key={node.person.id} className="flex flex-col items-center">
-        {/* Main parent box - compact */}
+        {/* Main parent box - modern design */}
         <div className={`
-          relative bg-white rounded-lg border shadow-sm p-1
-          ${node.level === 0 ? 'border-amber-400' : 'border-stone-300'}
+          relative bg-white rounded-xl border-2 shadow-md p-2 transition-all duration-300 hover:shadow-lg
+          ${node.level === 0 ? 'border-emerald-400 ring-2 ring-emerald-100' : 'border-slate-200 hover:border-emerald-300'}
         `}>
           <div className="flex flex-col items-center">
             {/* Main person */}
@@ -172,8 +172,8 @@ export default function FamilyTree ({
             
             {/* Children box */}
             <div className="bg-stone-50 rounded border border-dashed border-stone-300 p-2 min-w-[150px]">
-              {/* Generation label - smaller */}
-              <div className="text-center text-[10px] text-stone-500 font-medium mb-1">
+            {/* Generation label - modern */}
+              <div className="text-center text-[10px] font-heading font-semibold text-emerald-600 uppercase tracking-wider mb-2">
                 Thế hệ {node.level + 1}
               </div>
               
@@ -258,7 +258,7 @@ export default function FamilyTree ({
       <div className="absolute top-16 right-4 z-20">
         <button
           onClick={() => setShowPreview(!showPreview)}
-          className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg shadow-md text-sm font-medium flex items-center gap-2 transition-colors"
+          className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-xl shadow-lg shadow-emerald-500/25 text-sm font-heading font-medium flex items-center gap-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -271,9 +271,9 @@ export default function FamilyTree ({
       {/* Preview Modal */}
       {showPreview && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowPreview(false)}>
-          <div className="bg-white rounded-xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-auto" onClick={e => e.stopPropagation()}>
-            <div className="p-4 border-b border-stone-200 flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-stone-800">Xem trước gia phả</h3>
+          <div className="bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-auto" onClick={e => e.stopPropagation()}>
+            <div className="p-4 border-b border-slate-100 flex justify-between items-center bg-gradient-to-r from-slate-50 to-white">
+              <h3 className="text-lg font-heading font-semibold text-slate-800">Xem trước gia phả</h3>
               <button onClick={() => setShowPreview(false)} className="text-stone-500 hover:text-stone-700">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -282,8 +282,8 @@ export default function FamilyTree ({
             </div>
             <div className="p-6">
               <div className="mx-auto bg-white" style={{width: '1041px', height: '704px', overflow: 'hidden'}}>
-                <div className="flex flex-col items-center justify-start min-h-[704px] p-4 bg-gradient-to-b from-stone-50 to-stone-100">
-                  <h1 className="text-2xl font-bold text-stone-800 mb-6">Gia phả</h1>
+                <div className="flex flex-col items-center justify-start min-h-[704px] p-4 bg-gradient-to-b from-slate-50 to-slate-100">
+                  <h1 className="text-2xl font-heading font-bold text-slate-800 mb-6">Gia phả</h1>
                   <div className="flex justify-center gap-8 flex-wrap">
                     {treeData.map((tree, idx) => (
                       <div key={idx} className="flex flex-col items-center">
@@ -303,7 +303,7 @@ export default function FamilyTree ({
 
       <div
         ref={containerRef}
-        className={`w-full h-full overflow-auto bg-gradient-to-br from-stone-50 via-stone-100 to-stone-200 ${isPressed ? "cursor-grabbing" : "cursor-grab"}`}
+        className={`w-full h-full overflow-auto bg-gradient-to-br from-slate-50 via-white to-slate-100 ${isPressed ? "cursor-grabbing" : "cursor-grab"}`}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUpOrLeave}
